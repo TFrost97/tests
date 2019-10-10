@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="custom"></div>
+
+
+    <script>
+    
+    const myDiv = document.querySelector('.custom');
+    myDiv.setAttribute('style', "background-color: red" )
+
+    const born = new Event('born');
+    const newColor = new Event('newColor');
+    
+    createElement('h1', 'test h1')
+    createElement('h2', 'test h2')
+    myDiv.addEventListener('click', changeElement)
+
+    function createElement(item, text) {
+        const txt = document.createElement(item);
+
+        txt.textContent = text;
+        txt.addEventListener('born', wasBorn)
+        myDiv.addEventListener('newColor', consoleWork);
+
+        txt.dispatchEvent(born);
+
+        myDiv.appendChild(txt);
+    }
+
+    function changeElement(item, text) {
+        myDiv.dispatchEvent(newColor)
+
+        myDiv.setAttribute('style', 'background-color: blue');
+    }
+
+
+ function wasBorn(ev){
+     console.log(ev.type, ev.target, 'wasBorn')
+ }
+
+ function consoleWork(ev) {
+     console.log(ev.type, 'Custom events work how I thought')
+ }
+
+
+
+    </script>
+</body>
+</html>
