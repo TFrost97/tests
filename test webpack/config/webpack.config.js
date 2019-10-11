@@ -1,7 +1,8 @@
 const path = require('path');
 
-const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'development',
@@ -21,18 +22,29 @@ module.exports = {
 
     module: {
         rules: [
-            {
-                test: /\.txt$/,
-                use: 'raw-loader'
-            }
+          {
+            test: /\.txt$/,
+            use: 'raw-loader'
+          },
+          {
+            test: /\.css$/,
+            use: [MiniCssExtractPlugin.loader, 'css-loader']
+          },
+          {
+            test: /\.(scss|sass)$/,
+            use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+          }
         ]
-    },
+      },
 
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: "new app",
-            template: "src/template.html"
+            template: "src/templates/template.html"
         }),
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css'
+        })
     ]
 }
